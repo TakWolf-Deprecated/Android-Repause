@@ -10,6 +10,8 @@ A utility to help listen Android application level resumed or paused.
 
 一个用于帮助监听 Android 应用级别恢复或者暂停的工具。
 
+有一个功能上类似，但是细节上存在差别的项目：[https://github.com/TakWolf/Android-Foreback](https://github.com/TakWolf/Android-Foreback)
+
 ## Usage ##
 
 ### Gradle ###
