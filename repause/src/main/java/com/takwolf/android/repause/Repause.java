@@ -66,7 +66,7 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
 
     private boolean active = false;
 
-    private volatile long checkTime = 500;
+    private volatile long checkTime = 100;
     private boolean checking = false;
 
     private Listener[] collectListeners() {
