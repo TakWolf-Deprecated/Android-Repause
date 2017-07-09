@@ -10,6 +10,39 @@ A utility to help listen Android application level resumed or paused.
 
 一个用于帮助监听 Android 应用级别恢复或者暂停的工具。
 
+## Usage ##
+
+### Gradle ###
+
+``` gradle
+compile 'com.takwolf.android:repause:0.0.1'
+```
+
+### Java ###
+
+``` java
+public class AppController extends Application implements Repause.Listener {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Repause.init(this);
+        Repause.registerListener(this);
+    }
+
+    @Override
+    public void onApplicationResumed() {
+        // TODO
+    }
+
+    @Override
+    public void onApplicationPaused() {
+        // TODO
+    }
+
+}
+```
+
 ## Author ##
 
 TakWolf
