@@ -20,6 +20,8 @@ compile 'com.takwolf.android:repause:0.0.1'
 
 ### Java ###
 
+Initialize in `Application.onCreate()`, and register a listener:
+
 ``` java
 public class AppController extends Application implements Repause.Listener {
 
@@ -41,6 +43,15 @@ public class AppController extends Application implements Repause.Listener {
     }
 
 }
+```
+
+Notice, if register listener in `Activity`, don't forget to unregister to avoid memory leaks.
+
+Also library provides the following api:
+
+``` java
+Repause.isApplicationResumed();
+Repause.isApplicationPaused();
 ```
 
 ## Author ##
