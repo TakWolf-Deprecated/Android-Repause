@@ -3,6 +3,8 @@ package com.takwolf.android.repause;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -47,19 +49,25 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
 
     public static boolean isApplicationResumed() {
         checkInit();
-
-
-        // TODO
-
-
-        return false;
+        return singleton.active;
     }
 
     public static boolean isApplicationPaused() {
         return !isApplicationResumed();
     }
 
+    public static void setCheckTime(long checkTime) {
+        checkInit();
+        singleton.checkTime = checkTime;
+    }
+
     private final List<Listener> listenerList = new ArrayList<>();
+    private final Handler handler = new Handler(Looper.getMainLooper());
+
+    private boolean active = false;
+
+    private volatile long checkTime = 500;
+    private boolean checking = false;
 
     private Listener[] collectListeners() {
         synchronized (listenerList) {
@@ -95,18 +103,44 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
         }
     }
 
+    private final Runnable checkRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            synchronized (checkRunnable) {
+                checking = false;
+                if (active) {
+                    active = false;
+                    dispatchApplicationPaused();
+                }
+            }
+        }
+
+    };
+
     @Override
     public void onActivityResumed(Activity activity) {
-
-        // TODO
-
+        synchronized (checkRunnable) {
+            if (checking) {
+                handler.removeCallbacks(checkRunnable);
+                checking = false;
+            }
+            if (!active) {
+                active = true;
+                dispatchApplicationResumed();
+            }
+        }
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-
-        // TODO
-
+        synchronized (checkRunnable) {
+            if (active) {
+                handler.removeCallbacks(checkRunnable);
+                handler.postDelayed(checkRunnable, checkTime);
+                checking = true;
+            }
+        }
     }
 
     @Override
