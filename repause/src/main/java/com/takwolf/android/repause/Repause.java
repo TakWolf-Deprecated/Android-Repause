@@ -56,9 +56,9 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
         return !isApplicationResumed();
     }
 
-    public static void setCheckTime(long checkTime) {
+    public static void setCheckDelayTime(long checkDelayTime) {
         checkInit();
-        singleton.checkTime = checkTime;
+        singleton.checkDelayTime = checkDelayTime;
     }
 
     private final List<Listener> listenerList = new ArrayList<>();
@@ -66,7 +66,7 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
 
     private boolean active = false;
 
-    private volatile long checkTime = 100;
+    private volatile long checkDelayTime = 100;
     private boolean checking = false;
 
     private Listener[] collectListeners() {
@@ -137,7 +137,7 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
         synchronized (checkRunnable) {
             if (active) {
                 handler.removeCallbacks(checkRunnable);
-                handler.postDelayed(checkRunnable, checkTime);
+                handler.postDelayed(checkRunnable, checkDelayTime);
                 checking = true;
             }
         }
