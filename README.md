@@ -10,14 +10,6 @@ A utility to help listen Android application level resumed or paused.
 
 一个用于帮助监听 Android 应用级别恢复或者暂停的工具。
 
-
-
-
-
-
-
-
-
 The application level paused, meaning that all of the `Activity` are paused.
 
 This library implements the listening of the application level resumed and paused by adding a delay check task in the `Activity.onPause ()` callback.
