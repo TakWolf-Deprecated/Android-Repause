@@ -31,7 +31,7 @@
 ### Gradle ###
 
 ``` gradle
-compile 'com.takwolf.android:repause:0.0.2'
+compile 'com.takwolf.android:repause:0.0.3'
 ```
 
 ### Java ###
