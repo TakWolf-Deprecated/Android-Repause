@@ -14,13 +14,15 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = "Repause";
 
-    private Repause() {}
-
     private static Repause singleton;
 
     public static void init(Application application) {
+        init(application, null);
+    }
+
+    public static void init(Application application, Filter filter) {
         if (singleton == null) {
-            singleton = new Repause();
+            singleton = new Repause(filter);
             application.registerActivityLifecycleCallbacks(singleton);
         } else {
             Log.w(TAG, TAG + " has been initialized.");
@@ -63,11 +65,16 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
 
     private final List<Listener> listenerList = new ArrayList<>();
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Filter filter;
 
     private boolean active = false;
 
     private volatile long checkDelayTime = 100;
     private boolean checking = false;
+
+    private Repause(Filter filter) {
+        this.filter = filter;
+    }
 
     private Listener[] collectListeners() {
         synchronized (listenerList) {
@@ -121,13 +128,15 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityResumed(Activity activity) {
         synchronized (checkRunnable) {
-            if (checking) {
-                handler.removeCallbacks(checkRunnable);
-                checking = false;
-            }
-            if (!active) {
-                active = true;
-                dispatchApplicationResumed();
+            if (filter == null || !filter.isIgnore(activity)) {
+                if (checking) {
+                    handler.removeCallbacks(checkRunnable);
+                    checking = false;
+                }
+                if (!active) {
+                    active = true;
+                    dispatchApplicationResumed();
+                }
             }
         }
     }
@@ -135,10 +144,12 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityPaused(Activity activity) {
         synchronized (checkRunnable) {
-            if (active) {
-                handler.removeCallbacks(checkRunnable);
-                handler.postDelayed(checkRunnable, checkDelayTime);
-                checking = true;
+            if (filter == null || !filter.isIgnore(activity)) {
+                if (active) {
+                    handler.removeCallbacks(checkRunnable);
+                    handler.postDelayed(checkRunnable, checkDelayTime);
+                    checking = true;
+                }
             }
         }
     }
@@ -163,6 +174,12 @@ public final class Repause implements Application.ActivityLifecycleCallbacks {
         void onApplicationResumed();
 
         void onApplicationPaused();
+
+    }
+
+    public interface Filter {
+
+        boolean isIgnore(Activity activity);
 
     }
 
