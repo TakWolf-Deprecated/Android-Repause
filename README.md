@@ -31,7 +31,7 @@ If this library is not for you, try another library.
 ### Gradle ###
 
 ``` gradle
-implementation 'com.takwolf.android:repause:0.1.0'
+implementation 'com.takwolf.android:repause:0.1.1'
 ```
 
 ### Java ###

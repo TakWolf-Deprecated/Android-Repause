@@ -10,7 +10,7 @@ ext {
     groupId = 'com.takwolf.android'
     artifactId = 'repause'
 
-    libraryVersion = '0.1.0'
+    libraryVersion = '0.1.1'
     libraryName = 'Android - Repause'
     libraryDescription = 'A utility to help listen Android application level resumed or paused.'
 
