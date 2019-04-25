@@ -2,9 +2,10 @@ package com.takwolf.android.repausedemo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 public final class ToastUtils {
 
