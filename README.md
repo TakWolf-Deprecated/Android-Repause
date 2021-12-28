@@ -1,4 +1,8 @@
-# Android - Repause #
+# Deprecated
+
+This tool is now deprecated. Please switch to [Lifecycle-Aware Components](https://developer.android.google.cn/topic/libraries/architecture/lifecycle).
+
+# Android - Repause
 
 [![Build Status](https://travis-ci.org/TakWolf/Android-Repause.svg?branch=master)](https://travis-ci.org/TakWolf/Android-Repause)
 [![Bintray](https://api.bintray.com/packages/takwolf/maven/Android-Repause/images/download.svg)](https://bintray.com/takwolf/maven/Android-Repause/_latestVersion)
@@ -26,15 +30,15 @@ There is another library named [Android-Foreback](https://github.com/TakWolf/And
 
 If this library is not for you, try another library.
 
-## Usage ##
+## Usage
 
-### Gradle ###
+### Gradle
 
 ``` gradle
 implementation 'com.takwolf.android:repause:0.1.1'
 ```
 
-### Java ###
+### Java
 
 Initialize in `Application.onCreate()`, and register a listener:
 
@@ -70,15 +74,7 @@ Repause.isApplicationResumed();
 Repause.isApplicationPaused();
 ```
 
-## Author ##
-
-TakWolf
-
-[takwolf@foxmail.com](mailto:takwolf@foxmail.com)
-
-[http://takwolf.com](http://takwolf.com)
-
-## License ##
+## License
 
 ```
 Copyright 2017 TakWolf
